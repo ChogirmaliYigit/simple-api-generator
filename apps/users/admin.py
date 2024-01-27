@@ -1,17 +1,18 @@
 from django.contrib import admin
 from unfold.admin import ModelAdmin
 
-from apps.users.models import User
+from users.models import User
 
 
 @admin.register(User)
 class UserAdmin(ModelAdmin):
     list_display = (
-        "username",
         "email",
+        "username",
         "full_name",
         "is_active",
         "is_staff",
+        "is_deleted",
     )
     list_filter = (
         "is_active",
@@ -20,16 +21,16 @@ class UserAdmin(ModelAdmin):
     fields = (
         "first_name",
         "last_name",
-        "username",
         "email",
+        "username",
         "is_active",
         "is_staff",
     )
     search_fields = (
         "first_name",
         "last_name",
-        "username",
         "email",
+        "username",
         "id",
     )
 
