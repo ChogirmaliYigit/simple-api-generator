@@ -1,4 +1,4 @@
-name: edu-backend
+name: backend
 
 on:
   # Runs on pushes targeting the default branch
