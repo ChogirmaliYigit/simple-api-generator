@@ -1,6 +1,7 @@
 import uuid
-from django.shortcuts import get_object_or_404
+
 from applications.models import Application
+from django.shortcuts import get_object_or_404
 
 
 class ApplicationMiddleware:
@@ -9,7 +10,9 @@ class ApplicationMiddleware:
 
     def __call__(self, request):
         try:
-            request.app = get_object_or_404(Application, uuid=uuid.UUID(request.headers.get("AppToken")))
+            request.app = get_object_or_404(
+                Application, uuid=uuid.UUID(request.headers.get("AppToken"))
+            )
         except Exception as e:
             request.app = None
 

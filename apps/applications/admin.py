@@ -1,6 +1,6 @@
+from applications.models import Application
 from django.contrib import admin
 from unfold.admin import ModelAdmin
-from applications.models import Application
 
 
 @admin.register(Application)
@@ -13,9 +13,7 @@ class ApplicationAdmin(ModelAdmin):
         "uuid",
         "is_deleted",
     )
-    list_filter = (
-        "visibility",
-    )
+    list_filter = ("visibility",)
     fields = (
         "title",
         "description",

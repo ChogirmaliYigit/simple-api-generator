@@ -1,6 +1,6 @@
-from rest_framework import views, response, status, permissions
-from applications.serializers.apps import AppsListSerializer
 from applications.models import Application
+from applications.serializers.apps import AppsListSerializer
+from rest_framework import response, status, views
 
 
 class AppsListView(views.APIView):

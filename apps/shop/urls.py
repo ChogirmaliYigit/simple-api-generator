@@ -1,7 +1,6 @@
 from django.urls import path
-from shop.views.category import CategoryListView, CategoryDetailView
-from shop.views.product import ProductListView, ProductDetailView
-
+from shop.views.category import CategoryDetailView, CategoryListView
+from shop.views.product import ProductDetailView, ProductListView
 
 urlpatterns = [
     path("category", CategoryListView.as_view(), name="categories-list"),

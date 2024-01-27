@@ -5,7 +5,9 @@ from shop.models import Category
 class CategorySerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data["parent"] = CategorySerializer(instance=instance.parent).data if instance.parent else {}
+        data["parent"] = (
+            CategorySerializer(instance=instance.parent).data if instance.parent else {}
+        )
         return data
 
     def create(self, validated_data):
@@ -17,7 +19,11 @@ class CategorySerializer(serializers.ModelSerializer):
             parent_id = validated_data.get("parent_id")
 
             category = Category.objects.create(
-                title=title, description=description, attachment=attachment, parent_id=parent_id, app=request.app
+                title=title,
+                description=description,
+                attachment=attachment,
+                parent_id=parent_id,
+                app=request.app,
             )
             return category
 

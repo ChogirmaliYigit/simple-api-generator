@@ -1,6 +1,5 @@
-from rest_framework import serializers
 from applications.models import Application
-from users.serializers.user import UserSerializer
+from rest_framework import serializers
 
 
 class AppsListSerializer(serializers.ModelSerializer):

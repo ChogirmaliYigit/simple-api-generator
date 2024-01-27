@@ -5,7 +5,9 @@ from shop.models import Product
 class ProductSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data["parent"] = ProductSerializer(instance=instance.parent).data if instance.parent else {}
+        data["parent"] = (
+            ProductSerializer(instance=instance.parent).data if instance.parent else {}
+        )
         return data
 
     class Meta:
@@ -19,5 +21,5 @@ class ProductSerializer(serializers.ModelSerializer):
             "price",
             "discount_percentage",
             "rating",
-            "stock"
+            "stock",
         )
