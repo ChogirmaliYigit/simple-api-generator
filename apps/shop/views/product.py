@@ -1,24 +1,20 @@
-from core.permission.application import HasApplicationPermission
+from core.views.base import BaseAPIView, BaseListAPIView
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from shop.filters.product import ProductFilterBackend
 from shop.models import Product
 from shop.serializers.product import ProductSerializer
 
 
-class ProductListView(APIView):
-    permission_classes = (HasApplicationPermission,)
+class ProductListView(BaseListAPIView):
+    serializer_class = ProductSerializer
+    search_fields = ["title", "description"]
+    filter_backends = [ProductFilterBackend]
 
-    def get(self, request):
-        if hasattr(request, "app") and request.app:
-            products = Product.objects.filter(app=request.app)
-        else:
-            products = []
-        return Response(
-            ProductSerializer(instance=products, many=True).data, status.HTTP_200_OK
-        )
+    def get_queryset(self):
+        return Product.objects.filter(app=self.request.app)
 
     def post(self, request):
         serializer = ProductSerializer(data=request.data, context={"request": request})
@@ -27,9 +23,7 @@ class ProductListView(APIView):
         return Response(serializer.data, status.HTTP_201_CREATED)
 
 
-class ProductDetailView(APIView):
-    permission_classes = (HasApplicationPermission,)
-
+class ProductDetailView(BaseAPIView):
     def put(self, request, pk):
         product = get_object_or_404(Product, pk=pk, app=request.app)
         serializer = ProductSerializer(

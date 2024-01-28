@@ -1,4 +1,4 @@
-from applications.models import Application
+from applications.models import Application, ApplicationConfig
 from django.contrib import admin
 from unfold.admin import ModelAdmin
 
@@ -27,6 +27,27 @@ class ApplicationAdmin(ModelAdmin):
         "owner__email",
         "id",
         "uuid",
+    )
+
+    list_filter_submit = True
+
+
+@admin.register(ApplicationConfig)
+class ApplicationConfigAdmin(ModelAdmin):
+    list_display = (
+        "application",
+        "page_size",
+    )
+    fields = (
+        "application",
+        "page_size",
+    )
+    search_fields = (
+        "application__title",
+        "application__description",
+        "application__uuid",
+        "page_size",
+        "id",
     )
 
     list_filter_submit = True

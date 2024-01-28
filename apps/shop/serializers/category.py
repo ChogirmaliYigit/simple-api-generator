@@ -13,16 +13,9 @@ class CategorySerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         request = self.context.get("request")
         if hasattr(request, "app") and request.app:
-            title = validated_data.get("title")
-            description = validated_data.get("description")
-            attachment = validated_data.get("attachment")
-            parent_id = validated_data.get("parent_id")
-
+            validated_data.pop("app")
             category = Category.objects.create(
-                title=title,
-                description=description,
-                attachment=attachment,
-                parent_id=parent_id,
+                **validated_data,
                 app=request.app,
             )
             return category

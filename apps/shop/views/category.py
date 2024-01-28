@@ -1,24 +1,18 @@
-from core.permission.application import HasApplicationPermission
+from core.views.base import BaseAPIView, BaseListAPIView
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from shop.models import Category
 from shop.serializers.category import CategorySerializer
 
 
-class CategoryListView(APIView):
-    permission_classes = (HasApplicationPermission,)
+class CategoryListView(BaseListAPIView):
+    serializer_class = CategorySerializer
+    search_fields = ["title", "description"]
 
-    def get(self, request):
-        if hasattr(request, "app") and request.app:
-            categories = Category.objects.filter(app=request.app)
-        else:
-            categories = []
-        return Response(
-            CategorySerializer(instance=categories, many=True).data, status.HTTP_200_OK
-        )
+    def get_queryset(self):
+        return Category.objects.filter(app=self.request.app)
 
     def post(self, request):
         serializer = CategorySerializer(data=request.data, context={"request": request})
@@ -27,9 +21,7 @@ class CategoryListView(APIView):
         return Response(serializer.data, status.HTTP_201_CREATED)
 
 
-class CategoryDetailView(APIView):
-    permission_classes = (HasApplicationPermission,)
-
+class CategoryDetailView(BaseAPIView):
     def put(self, request, pk):
         category = get_object_or_404(Category, pk=pk, app=request.app)
         serializer = CategorySerializer(

@@ -10,9 +10,20 @@ class ProductSerializer(serializers.ModelSerializer):
         )
         return data
 
+    def create(self, validated_data):
+        request = self.context.get("request")
+        if hasattr(request, "app") and request.app:
+            validated_data.pop("app")
+            product = Product.objects.create(
+                **validated_data,
+                app=request.app,
+            )
+            return product
+
     class Meta:
         model = Product
         fields = (
+            "id",
             "title",
             "description",
             "attachment",

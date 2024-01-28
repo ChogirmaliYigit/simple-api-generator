@@ -24,6 +24,7 @@ class Category(BaseModel):
     class Meta:
         db_table = "shops"
         verbose_name_plural = "Categories"
+        ordering = ["-id"]
 
 
 class Product(BaseModel):
@@ -55,3 +56,4 @@ class Product(BaseModel):
 
     class Meta:
         db_table = "products"
+        ordering = ["-id"]
