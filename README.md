@@ -3,7 +3,7 @@
 
 ## Set up local environment
 
-- _Clone repository_ `git clone https://github.com/ChogirmaliYigit/django-template.git`
+- _Clone repository_ `git clone https://github.com/ChogirmaliYigit/simple-api-generator.git`
 - _Run_ `bash set_pre_commit.sh` to set the pre-commit.
 - _Run_ `cp .env.example .env`. Then configure the `.env` file's constants.
 - Create an environment using command `python -m venv venv` for Windows and `python3 -m venv venv` for Unix-based OS.
