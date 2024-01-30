@@ -1,6 +1,6 @@
 # A simple Rest API generator
 
-You can create apps to use our Rest API generator to make APIs without backend knowledge
+You can create apps to use our Rest API generator to make APIs and use them in your frontend projects without backend knowledge
 
 ## Set up local environment
 
