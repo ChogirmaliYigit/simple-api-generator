@@ -1,5 +1,6 @@
-# A minimal django set-up template
+# A simple Rest API generator
 
+You can create apps to use our Rest API generator to make APIs without backend knowledge
 
 ## Set up local environment
 
