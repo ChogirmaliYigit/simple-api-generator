@@ -17,16 +17,24 @@ class ProductListView(BaseListAPIView):
         return Product.objects.filter(app=self.request.app)
 
     def post(self, request):
-        serializer = ProductSerializer(data=request.data, context={"request": request})
+        serializer = self.serializer_class(
+            data=request.data, context={"request": request}
+        )
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status.HTTP_201_CREATED)
 
 
 class ProductDetailView(BaseAPIView):
+    model = Product
+    serializer_class = ProductSerializer
+
+    def get_product(self, request, pk):
+        return get_object_or_404(self.model, pk=pk, app=request.app)
+
     def put(self, request, pk):
-        product = get_object_or_404(Product, pk=pk, app=request.app)
-        serializer = ProductSerializer(
+        product = self.get_product(request, pk)
+        serializer = self.serializer_class(
             instance=product, data=request.data, partial=True
         )
         serializer.is_valid(raise_exception=True)
@@ -34,7 +42,7 @@ class ProductDetailView(BaseAPIView):
         return Response(serializer.data, status.HTTP_200_OK)
 
     def delete(self, request, pk):
-        product = get_object_or_404(Product, pk=pk, app=request.app)
+        product = self.get_product(request, pk)
         product.deleted_at = timezone.now()
         product.save()
         return Response({}, status.HTTP_204_NO_CONTENT)
